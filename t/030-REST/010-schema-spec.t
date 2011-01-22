@@ -2,12 +2,12 @@
 
 use strict;
 use warnings;
-use FindBin;
 
 use Test::More;
 use Test::Fatal;
 use Test::Jackalope;
 use Test::Jackalope::Fixtures;
+use Test::Jackalope::Fixtures::Manager::REST;
 
 BEGIN {
     use_ok('Jackalope::REST');
@@ -19,8 +19,9 @@ my $repo = Jackalope::REST->new->resolve(
 isa_ok($repo, 'Jackalope::Schema::Repository');
 
 my $fixtures = Test::Jackalope::Fixtures->new(
-    fixture_dir => [ $FindBin::Bin, '..', '..', 'tests', 'fixtures' ],
-    repo        => $repo
+    fixture_manager => Test::Jackalope::Fixtures::Manager::REST->new,
+    fixture_set     => 'REST',
+    repo            => $repo
 );
 
 foreach my $type ( qw[ resource resource/ref service/crud ] ) {
