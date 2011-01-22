@@ -8,7 +8,7 @@ use Test::Fatal;
 use Test::Moose;
 
 BEGIN {
-    use_ok('Jackalope');
+    use_ok('Jackalope::REST');
     use_ok('Jackalope::REST::Router');
 }
 

@@ -9,7 +9,7 @@ use Test::Moose;
 use Test::Jackalope::REST::ResourceRepositoryTestSuite;
 
 BEGIN {
-    use_ok('Jackalope');
+    use_ok('Jackalope::REST');
 }
 
 {
