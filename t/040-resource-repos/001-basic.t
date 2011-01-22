@@ -3,12 +3,10 @@
 use strict;
 use warnings;
 
-use lib 't/lib';
-
 use Test::More;
 use Test::Fatal;
 use Test::Moose;
-use ResourceRepoTest;
+use Test::Jackalope::REST::ResourceRepositoryTestSuite;
 
 BEGIN {
     use_ok('Jackalope');
@@ -57,7 +55,7 @@ BEGIN {
 }
 
 my $repo = Simple::DataRepo->new;
-ResourceRepoTest->new(
+Test::Jackalope::REST::ResourceRepositoryTestSuite->new(
     fixtures => [
         { id => 1, body => { foo => 'bar'   } },
         { id => 2, body => { bar => 'baz'   } },
