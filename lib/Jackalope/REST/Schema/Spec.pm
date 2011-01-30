@@ -6,11 +6,11 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Jackalope::Schema::Spec';
 
-around '_all_spec_builder_methods' => sub {
+around 'all_spec_builder_methods' => sub {
     my $next = shift;
     my $self = shift;
     return (
-        $self->$next(), 
+        $self->$next(),
         qw[
             resource
             resource_ref
