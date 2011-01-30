@@ -6,17 +6,21 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 extends 'Jackalope::Schema::Spec';
 
-override '_all_spec_builder_methods' => sub {
+around '_all_spec_builder_methods' => sub {
+    my $next = shift;
     my $self = shift;
-    super(), qw[
-        resource
-        resource_ref
+    return (
+        $self->$next(), 
+        qw[
+            resource
+            resource_ref
 
-        service_discoverable
-        service_readonly
-        service_non_editable
-        service
-    ]
+            service_discoverable
+            service_readonly
+            service_non_editable
+            service
+        ]
+    );
 };
 
 ## ------------------------------------------------------------------
