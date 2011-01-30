@@ -91,7 +91,7 @@ sub check_data_schema {
 
     my $params;
     # we know we are expecting data
-    # if there is a 'schema' in the
+    # if there is a 'data_schema' in the
     # link description, so we extract
     # the parameters based on the
     # 'method' specified

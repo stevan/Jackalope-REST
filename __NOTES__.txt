@@ -25,13 +25,6 @@
       the resources, so that only the correct
       links are present.
 
-- Jackalope::REST::Service::Directory
-    - this should collect services and key them by schema->id
-      and then the services should have access to them, this
-      should simplify some of the 030-multi-schema-service.t stuff
-      by allowing the resource/ref stuff to find the correct
-      resource-repository for us
-
 - Jackalope::REST::Client
     - write it
     - should be possible to script one of these
