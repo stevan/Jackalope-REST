@@ -1,4 +1,4 @@
-package Jackalope::REST::Service::Directory;
+package Jackalope::REST::Application;
 use Moose;
 
 our $VERSION   = '0.01';
@@ -74,11 +74,11 @@ __END__
 
 =head1 NAME
 
-Jackalope::REST::Service::Directory - A Moosey solution to this problem
+Jackalope::REST::Application - A Moosey solution to this problem
 
 =head1 SYNOPSIS
 
-  use Jackalope::REST::Service::Directory;
+  use Jackalope::REST::Application;
 
 =head1 DESCRIPTION
 
@@ -102,7 +102,7 @@ Stevan Little E<lt>stevan.little@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2010 Infinity Interactive, Inc.
+Copyright 2011 Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 
