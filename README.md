@@ -69,6 +69,79 @@ so that mechanics of good HTTP friendly REST applications are easy and simple to
 build. As this framework grows we will likely incorporate larger and more opinionated
 building blocks to make development even easier.
 
+# Jackalope-REST-CRUD
+
+### REST style CRUD web services
+
+This part of Jackalope starts to get even more opinionated. Jackalope-REST provides a
+basic set of tools for exposing discoverable services and Jackalope-REST-CRUD provides
+even more tools to manage a collection a resources in a CRUD like manner. It borrows
+some of the basic HTTP interactions from the ATOM publishing protocol and Microsoft's
+Cannonical REST Entity model, then mixed up with some of my personal opinions.
+
+It should be noted that there is more to REST then simple CRUD actions on resource
+collections. Jackalope-REST provides all the building blocks for constructing a
+REST application using any kind of custom workflow you would like. However,
+because CRUD is so common, currently it is available "out of the box" with
+Jackalope-REST-CRUD.
+
+#### CRUD Services
+
+The services take a Jackalope schema as input, typically one that extends the
+'jackalope/rest/service/crud' schema, and a resource repository and creates a web
+service with the following features.
+
+- options
+    - This is done by doing a OPTIONS to the URI of a collection
+    - The result is a resource wrapping the schema object used to create
+      this service
+        - It returns a 200 (OK) status code
+        - the resource contains links to all the entry-points for this
+          service, those typically are:
+            - listing
+            - creation
+            - options
+            - ... and any other linkrel in the schema which does not have
+              a parameterized URI template for an href
+- listing
+    - This is done by doing a GET to the URI of a collection (/)
+        - optional parameters are taken, which the connected resource repository
+          can optionally handle
+            - query : the search query
+            - attrs : attributes such as 'limit' and 'skip'
+    - The result is a list of resources, each with embedded hypermedia controls
+        - It returns a 200 (OK) status code
+- creation
+    - Creation is done by doing a POST to the specified creation URI (/) with the body of a resource as the content
+    - The newly created resource is returned in the body of the response
+        - the resource will include links that provide hrefs for the various other actions
+        - It returns a 201 (Created) status code
+        - the response Location header provides the link to read the resource
+- read
+    - Reading is done by doing a GET the specified reading URI (/:id) with the ID for the resource embedded in the URL
+    - The resource is returned in the body of the response
+        - It returns a 200 (OK) status code
+        - If the resource is not found it returns a 404 (Not Found) status code
+- update
+    - Updating is done by doing a PUT to the specified update URI (/:id) with ...
+        - The resource id embedded in the URL
+        - You need to PUT the full wrapped resource (minus the links metadata) so that it can test the version string to make sure it is in sync
+    - the updated resource is sent back in the body of the request
+        - It returns a 202 (Accepted) status code
+        - If the resource is not found it returns a 404 (Not Found) status code
+        - If the resource is out of sync (versions don't match), a 409 (Conflict) status is returned with no content
+        - If the ID in the URL does not match the ID in the resource, a 400 (Bad Request) status is returned with no content
+- delete
+    - deletion is done by doing a DELETE to the specified deletion URI (/:id) with the ID for the resource embedded in the URL
+        - It returns a 204 (No Content) status code
+        - An optional If-Matches header is supported for version checking
+            - it should contain the version string of the resource you want to delete and we will check it against the current one before deletion
+            - if it does not match it returns a 409 (Conflict) status with no content
+
+We also check to make sure that the proper HTTP method is used for the proper
+URI and throw a 405 (Method Not Allowed) error with an 'Allow' header properly
+populated.
+
 ## Installation
 
 To install this module type the following:
