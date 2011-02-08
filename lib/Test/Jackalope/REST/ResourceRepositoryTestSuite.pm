@@ -117,10 +117,10 @@ sub test_errors {
 
     my $id = $self->get_fixture(0)->{id};
 
-    like(exception { $repo->get_resource(10101) }, qr/404 Resource Not Found/, '... got the exception like we expected');
-    like(exception { $repo->update_resource(10101, $resources->[0]) }, qr/400 Bad Request/, '... got the exception like we expected');
-    like(exception { $repo->update_resource($id, $resources->[0]) }, qr/409 Conflict Detected/, '... got the exception like we expected');
-    like(exception { $repo->delete_resource(10101) }, qr/404 Resource Not Found/, '... got the exception like we expected');
+    isa_ok(exception { $repo->get_resource(10101) }, 'Jackalope::REST::Error::ResourceNotFound', '... got the exception like we expected');
+    isa_ok(exception { $repo->update_resource(10101, $resources->[0]) }, 'Jackalope::REST::Error::BadRequest', '... got the exception like we expected');
+    isa_ok(exception { $repo->update_resource($id, $resources->[0]) }, 'Jackalope::REST::Error::ConflictDetected', '... got the exception like we expected');
+    isa_ok(exception { $repo->delete_resource(10101) }, 'Jackalope::REST::Error::ResourceNotFound', '... got the exception like we expected');
 }
 
 sub test_delete_resource {
@@ -134,8 +134,8 @@ sub test_delete_resource {
     $repo->delete_resource( $id );
     is( scalar @{ $repo->list_resources }, ($self->fixture_count - 1), '... now 2 resources found');
 
-    like(exception { $repo->get_resource($id) }, qr/404 Resource Not Found/, '... got the exception like we expected');
-    like(exception { $repo->update_resource($id, $resource_to_delete) }, qr/404 Resource Not Found/, '... got the exception like we expected');
+    isa_ok(exception { $repo->get_resource($id) }, 'Jackalope::REST::Error::ResourceNotFound', '... got the exception like we expected');
+    isa_ok(exception { $repo->update_resource($id, $resource_to_delete) }, 'Jackalope::REST::Error::ResourceNotFound', '... got the exception like we expected');
 }
 
 sub test_list_resources_again {
@@ -170,9 +170,9 @@ sub test_delete_resource_again {
     }, undef, '... deletion succeed');
     is( scalar @{ $repo->list_resources }, ($self->fixture_count - 2), '... now 1 resource found');
 
-    like(exception {
+    isa_ok(exception {
         $repo->delete_resource( $self->get_fixture(2)->{id}, { if_matches => $resources->[0]->{'version'} }  )
-    }, qr/409 Conflict Detected/, '... deletion failed (like we wanted it to)');
+    }, 'Jackalope::REST::Error::ConflictDetected', '... deletion failed (like we wanted it to)');
 
     is( scalar @{ $repo->list_resources }, ($self->fixture_count - 2), '... still 1 resource found (because deletion failed)');
 }

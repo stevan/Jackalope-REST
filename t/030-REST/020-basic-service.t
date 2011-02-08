@@ -148,8 +148,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code             => 400,
-                desc             => 'Bad Request',
+                status_code      => 400,
+                reason           => 'Bad Request',
                 message          => 'Params failed to validate against data_schema',
                 validation_error => {
                     error => '{ first_name: "Stevan", last_name: "Little" } did not pass properties check',
@@ -222,9 +222,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 404,
-                desc    => 'Resource Not Found',
-                message => 'no resource for id (2)',
+                status_code => 404,
+                reason      => 'Not Found',
+                message     => 'no resource for id (2)',
             },
             '... got the error we expected'
         );
@@ -267,8 +267,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code             => 400,
-                desc             => 'Bad Request',
+                status_code      => 400,
+                reason           => 'Bad Request',
                 message          => 'Params failed to validate against data_schema',
                 validation_error => {
                     error => '{ body: { age: 38, first_name: "Stevan", last_name: "Little" }, id: 1, versi: "fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2" } did not pass properties check',
@@ -289,9 +289,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 400,
-                desc    => 'Bad Request',
-                message => 'the id does not match the id of the updated resource'
+                status_code => 400,
+                reason      => 'Bad Request',
+                message     => 'the id does not match the id of the updated resource'
             },
             '... got the error we expected'
         );
@@ -305,9 +305,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 404,
-                desc    => 'Resource Not Found',
-                message => 'no resource for id (2)',
+                status_code => 404,
+                reason      => 'Not Found',
+                message     => 'no resource for id (2)',
             },
             '... got the error we expected'
         );
@@ -321,9 +321,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 409,
-                desc    => 'Conflict Detected',
-                message => 'resource submitted has out of date version',
+                status_code => 409,
+                reason      => 'Conflict',
+                message     => 'resource submitted has out of date version',
             },
             '... got the error we expected'
         );
@@ -365,9 +365,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 409,
-                desc    => 'Conflict Detected',
-                message => 'resource submitted has out of date version',
+                status_code => 409,
+                reason      => 'Conflict',
+                message     => 'resource submitted has out of date version',
             },
             '... got the error we expected'
         );
@@ -451,8 +451,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code            => 405,
-                desc            => 'Method Not Allowed',
+                status_code     => 405,
+                reason          => 'Method Not Allowed',
                 message         => 'Method Not Allowed',
                 allowed_methods => [ 'GET', 'OPTIONS', 'POST' ]
             },

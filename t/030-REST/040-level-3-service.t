@@ -157,7 +157,7 @@ use Jackalope::REST::Error::ConflictDetected;
 
         my $slot = $self->get_slot_by_id( $slot_id );
         (defined $slot)
-            || Jackalope::REST::Error::ConflictDetected->throw("Slot $slot_id is no longer available");
+            || Jackalope::REST::Error::ConflictDetected->throw(message => "Slot $slot_id is no longer available");
             # this ^ exception is basically
             # saying that the slot is no longer
             # available, which we are assuming
@@ -181,7 +181,7 @@ use Jackalope::REST::Error::ConflictDetected;
         my ($self, $appt_id) = @_;
 
         (exists $self->appointments->{ $appt_id })
-            || Jackalope::REST::Error::ResourceNotFound->throw("Appointment $appt_id is not found");
+            || Jackalope::REST::Error::ResourceNotFound->throw(message => "Appointment $appt_id is not found");
 
         Jackalope::REST::Resource->new(
             id   => $appt_id,
@@ -193,7 +193,7 @@ use Jackalope::REST::Error::ConflictDetected;
         my ($self, $appt_id) = @_;
 
         (exists $self->appointments->{ $appt_id })
-            || Jackalope::REST::Error::ResourceNotFound->throw("Appointment $appt_id is no longer available");
+            || Jackalope::REST::Error::ResourceNotFound->throw(message => "Appointment $appt_id is no longer available");
 
         delete $self->appointments->{ $appt_id };
         return;
@@ -292,7 +292,7 @@ use Jackalope::REST::Error::ConflictDetected;
         if ( my $if_matches = $r->headers->header('If-Matches') ) {
             my $appointment = $self->service->resource_repository->get_appointment( $appt_id );
             ($appointment->compare_version( $if_matches ))
-                || Jackalope::REST::Error::ConflictDetected->throw("resource submitted has out of date version");
+                || Jackalope::REST::Error::ConflictDetected->throw(message => "resource submitted has out of date version");
         }
 
         $self->service->resource_repository->cancel_appointment( $appt_id );
@@ -520,9 +520,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                'code'    => 409,
-                'desc'    => 'Conflict Detected',
-                'message' => 'Slot 12345 is no longer available'
+                'status_code' => 409,
+                'reason'      => 'Conflict',
+                'message'     => 'Slot 12345 is no longer available'
             },
             '... got the right value for booking  a slot that doesnt exist'
         );
@@ -562,9 +562,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                'code'    => 409,
-                'desc'    => 'Conflict Detected',
-                'message' => 'resource submitted has out of date version'
+                'status_code' => 409,
+                'reason'      => 'Conflict',
+                'message'     => 'resource submitted has out of date version'
             },
             '... got the right value for apptointment delete (error)'
         );
@@ -583,9 +583,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                'code'    => 404,
-                'desc'    => 'Resource Not Found',
-                'message' => 'Appointment 1 is not found'
+                'status_code' => 404,
+                'reason'      => 'Not Found',
+                'message'     => 'Appointment 1 is not found'
             },
             '... got the right value for apptointment read (error)'
         );
@@ -597,9 +597,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                'code'    => 404,
-                'desc'    => 'Resource Not Found',
-                'message' => 'Appointment 1 is no longer available'
+                'status_code' => 404,
+                'reason'      => 'Not Found',
+                'message'     => 'Appointment 1 is no longer available'
             },
             '... got the right value for apptointment delete (error)'
         );

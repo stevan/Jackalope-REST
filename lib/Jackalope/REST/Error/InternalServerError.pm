@@ -4,10 +4,8 @@ use Moose;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'Jackalope::REST::Error';
-
-has '+code' => (default => 500);
-has '+desc' => (default => 'Internal Server Error');
+extends 'HTTP::Throwable::InternalServerError';
+   with 'Jackalope::REST::Error';
 
 __PACKAGE__->meta->make_immutable( inline_constructor => 0 );
 

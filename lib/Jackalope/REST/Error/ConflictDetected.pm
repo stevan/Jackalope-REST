@@ -4,12 +4,10 @@ use Moose;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'Jackalope::REST::Error';
+extends 'HTTP::Throwable::Conflict';
+   with 'Jackalope::REST::Error';
 
-has '+code' => (default => 409);
-has '+desc' => (default => 'Conflict Detected');
-
-__PACKAGE__->meta->make_immutable( inline_constructor => 0 );
+__PACKAGE__->meta->make_immutable;
 
 no Moose; 1;
 

@@ -42,7 +42,7 @@ sub get_target_for_linkrel {
     my $target_class = $self->get_linkrels_to_target_map->{ lc $link->{'rel'} };
 
     Jackalope::REST::Error::NotImplemented->throw(
-        "No target class found for rel (" . $link->{'rel'} . ")"
+        message => "No target class found for rel (" . $link->{'rel'} . ")"
     ) unless defined $target_class;
 
     load_class( $target_class );
@@ -75,7 +75,7 @@ sub to_app {
                 );
             }
         };
-        return $error->to_psgi( $self->serializer ) if $error;
+        return $error->as_psgi( $self->serializer ) if $error;
         return $result;
     };
 }

@@ -195,8 +195,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code             => 400,
-                desc             => 'Bad Request',
+                status_code  => 400,
+                reason => 'Bad Request',
                 message          => 'Params failed to validate against data_schema',
                 validation_error => {
                     error => '{ first_name: "Stevan", last_name: "Little" } did not pass properties check',
@@ -269,8 +269,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 404,
-                desc    => 'Resource Not Found',
+                status_code => 404,
+                reason => 'Not Found',
                 message => 'no resource for id (2)',
             },
             '... got the error we expected'
@@ -316,8 +316,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code             => 400,
-                desc             => 'Bad Request',
+                status_code  => 400,
+                reason => 'Bad Request',
                 message          => 'Params failed to validate against data_schema',
                 validation_error => {
                     error => '{ body: { age: 38, first_name: "Stevan", last_name: "Little" }, id: 1, versi: "fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2" } did not pass properties check',
@@ -339,8 +339,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 400,
-                desc    => 'Bad Request',
+                status_code => 400,
+                reason => 'Bad Request',
                 message => 'the id does not match the id of the updated resource'
             },
             '... got the error we expected'
@@ -356,8 +356,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 404,
-                desc    => 'Resource Not Found',
+                status_code => 404,
+                reason => 'Not Found',
                 message => 'no resource for id (2)',
             },
             '... got the error we expected'
@@ -373,8 +373,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 409,
-                desc    => 'Conflict Detected',
+                status_code => 409,
+                reason => 'Conflict',
                 message => 'resource submitted has out of date version',
             },
             '... got the error we expected'
@@ -435,8 +435,8 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 409,
-                desc    => 'Conflict Detected',
+                status_code => 409,
+                reason => 'Conflict',
                 message => 'resource submitted has out of date version',
             },
             '... got the error we expected'

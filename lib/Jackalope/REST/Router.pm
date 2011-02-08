@@ -113,16 +113,16 @@ sub match {
                 };
             }
             else {
-                Jackalope::REST::Error::MethodNotAllowed->new(
-                    allowed_methods => [ keys %$method_map ],
-                    message         => "Method Not Allowed"
-                )->throw
+                Jackalope::REST::Error::MethodNotAllowed->throw(
+                    valid_methods => [ sort keys %$method_map ],
+                    message       => "Method Not Allowed"
+                )
             }
         }
     }
 
     Jackalope::REST::Error::ResourceNotFound->throw(
-        "Could not find resource at ($uri) with method ($method)"
+        message => "Could not find resource at ($uri) with method ($method)"
     )
 }
 

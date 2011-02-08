@@ -4,12 +4,10 @@ use Moose;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'Jackalope::REST::Error';
+extends 'HTTP::Throwable::NotFound';
+   with 'Jackalope::REST::Error';
 
-has '+code' => (default => 404);
-has '+desc' => (default => 'Resource Not Found');
-
-__PACKAGE__->meta->make_immutable( inline_constructor => 0 );
+__PACKAGE__->meta->make_immutable;
 
 no Moose; 1;
 

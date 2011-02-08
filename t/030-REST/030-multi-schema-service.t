@@ -31,8 +31,8 @@ use Jackalope::REST::Resource::Repository::Simple;
         required => 1,
     );
 
-    sub list   { Jackalope::REST::Error::NotImplemented->throw("List is not supported") }
-    sub update { Jackalope::REST::Error::NotImplemented->throw("Update is not supported") }
+    sub list   { Jackalope::REST::Error::NotImplemented->throw(message => "List is not supported") }
+    sub update { Jackalope::REST::Error::NotImplemented->throw(message => "Update is not supported") }
 
     sub create {
         my ($self, $data) = @_;
@@ -51,7 +51,7 @@ use Jackalope::REST::Resource::Repository::Simple;
         my ($self, $id, $data) = @_;
         my $cart = $self->db->{ $id };
         (defined $cart)
-            || Jackalope::REST::Error::ResourceNotFound->throw("no cart for id ($id)");
+            || Jackalope::REST::Error::ResourceNotFound->throw(message => "no cart for id ($id)");
         push @{ $cart->{'items'} } => $data;
         return $self->wrap_data(
             $id,
@@ -765,9 +765,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 404,
-                desc    => 'Resource Not Found',
-                message => 'no resource for id (1)',
+                status_code => 404,
+                reason      => 'Not Found',
+                message     => 'no resource for id (1)',
             },
             '... got the error we expected'
         );
@@ -780,9 +780,9 @@ test_psgi( app => $app, client => sub {
         is_deeply(
             $serializer->deserialize( $res->content ),
             {
-                code    => 404,
-                desc    => 'Resource Not Found',
-                message => 'No service found at /foo',
+                status_code => 404,
+                reason      => 'Not Found',
+                message     => 'No service found at /foo',
             },
             '... got the error we expected'
         );

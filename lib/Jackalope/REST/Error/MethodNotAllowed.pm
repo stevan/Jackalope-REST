@@ -4,36 +4,18 @@ use Moose;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'Jackalope::REST::Error';
-
-has '+code' => (default => 405);
-has '+desc' => (default => 'Method Not Allowed');
-
-has 'allowed_methods' => ( is => 'ro', isa => 'ArrayRef' );
-
-# The method specified in the Request-Line is not allowed for the resource
-# identified by the Request-URI. The response MUST include an Allow header
-# containing a list of valid methods for the requested resource.
+extends 'HTTP::Throwable::MethodNotAllowed';
+   with 'Jackalope::REST::Error';
 
 around 'pack' => sub {
     my $next = shift;
     my $self = shift;
     my $pack = $self->$next();
-    $pack->{allowed_methods} = [ sort @{ $self->allowed_methods } ];
+    $pack->{allowed_methods} = [ sort @{ $self->valid_methods } ];
     $pack;
 };
 
-around 'to_psgi' => sub {
-    my $next = shift;
-    my $self = shift;
-    my $psgi = $self->$next( @_ );
-    push @{ $psgi->[1] } => (
-        'Allow' => join "," => sort @{ $self->allowed_methods }
-    );
-    $psgi
-};
-
-__PACKAGE__->meta->make_immutable( inline_constructor => 0 );
+__PACKAGE__->meta->make_immutable;
 
 no Moose; 1;
 

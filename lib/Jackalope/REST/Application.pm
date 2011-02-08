@@ -49,7 +49,7 @@ sub to_app {
         }
         Jackalope::REST::Error::ResourceNotFound->new(
             message => "No service found at $path"
-        )->to_psgi(
+        )->as_psgi(
             # NOTE:
             # this isn't ideal, but we
             # don't really have a simpler

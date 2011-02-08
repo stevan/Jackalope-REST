@@ -1,50 +1,37 @@
 package Jackalope::REST::Error;
-use Moose;
+use Moose::Role;
+
+use Plack::Util;
 
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'Throwable::Error';
-
-has 'code' => (
-    is       => 'ro',
-    isa      => 'Int',
-    required => 1,
-);
-
-has 'desc' => (
-    is       => 'ro',
-    isa      => 'Str',
-    required => 1,
-);
-
-around 'as_string' => sub {
-    my $next = shift;
-    my $self = shift;
-    $self->code . " " . $self->desc . " : " . $self->message;
-};
-
 sub pack {
     my $self = shift;
     {
-        code    => $self->code,
-        desc    => $self->desc,
-        message => $self->message,
+        status_code => $self->status_code,
+        reason      => $self->reason,
+        message     => $self->message,
     }
 }
 
-sub to_psgi {
-    my ($self, $serializer) = @_;
-    [
-        $self->code,
-        [ 'Content-Type' => $serializer->content_type ],
-        [ $serializer->serialize( $self->pack ) ]
-    ];
-}
+around 'as_psgi' => sub {
+    my $next = shift;
+    my $self = shift;
+    my $psgi = $self->$next();
 
-__PACKAGE__->meta->make_immutable( inline_constructor => 0 );
+    my $serializer = shift;
+    my $body       = $serializer->serialize( $self->pack );
 
-no Moose; 1;
+    Plack::Util::header_set( $psgi->[1], 'Content-Type'   => $serializer->content_type );
+    Plack::Util::header_set( $psgi->[1], 'Content-Length' => length $body );
+
+    $psgi->[2] = [ $body ];
+
+    $psgi;
+};
+
+no Moose::Role; 1;
 
 __END__
 
