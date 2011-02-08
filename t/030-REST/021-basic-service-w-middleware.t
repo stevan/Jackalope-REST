@@ -107,7 +107,7 @@ test_psgi( app => $app, client => sub {
         is($res->code, 200, '... got the right status for list ');
         my $resource = $serializer->deserialize( $res->content );
         is( $resource->{id}, 'simple/person', '... got the right id');
-        is( $resource->{version}, '5be1b4e9a89b8de979d8746c1cca8fe72c4948b401b82994e4c3d3753ad97b2e', '... got the right version');
+        is( $resource->{version}, 'bb90a542536866f80377754bd2b02b549a948825ac1e9ec4f7989788e1ba2ae2', '... got the right version');
         is_deeply(
             $resource->{links},
             [

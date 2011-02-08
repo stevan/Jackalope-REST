@@ -114,8 +114,8 @@ sub match {
             }
             else {
                 Jackalope::REST::Error::MethodNotAllowed->throw(
-                    valid_methods => [ sort keys %$method_map ],
-                    message       => "Method Not Allowed"
+                    allow   => [ sort keys %$method_map ],
+                    message => "Method Not Allowed"
                 )
             }
         }

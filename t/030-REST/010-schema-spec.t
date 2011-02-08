@@ -25,7 +25,7 @@ my $fixtures = Test::Jackalope::Fixtures->new(
 );
 
 foreach my $type ( qw[ resource resource/ref service/crud ] ) {
-    my $schema = $repo->get_compiled_schema_by_uri('jackalope/rest/' . $type);
+    my $schema = $repo->get_compiled_schema_by_uri('jackalope/rest/' . $type)->compiled;
     validation_pass(
         $repo->validate(
             { '$ref' => 'jackalope/core/types/object' },

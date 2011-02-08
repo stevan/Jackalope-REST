@@ -11,7 +11,7 @@ around 'pack' => sub {
     my $next = shift;
     my $self = shift;
     my $pack = $self->$next();
-    $pack->{allowed_methods} = [ sort @{ $self->valid_methods } ];
+    $pack->{allowed_methods} = [ sort @{ $self->allow } ];
     $pack;
 };
 

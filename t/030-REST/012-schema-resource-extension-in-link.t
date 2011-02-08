@@ -60,7 +60,7 @@ is(exception{
     $repo->register_schemas( $schemas );
 }, undef, '... did not die when registering this schema');
 
-my $doctor = $repo->get_compiled_schema_by_uri('/schemas/doctor');
+my $doctor = $repo->get_compiled_schema_by_uri('/schemas/doctor')->compiled;
 
 is(
     $doctor->{'links'}->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'type'},

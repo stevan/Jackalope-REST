@@ -31,7 +31,7 @@ is(exception{
     )
 }, undef, '... did not die when registering this schema');
 
-my $person = $repo->get_compiled_schema_by_uri('simple/person');
+my $person = $repo->get_compiled_schema_by_uri('simple/person')->compiled;
 
 is($person->{'links'}->{'list'}->{'target_schema'}->{'items'}->{'properties'}->{'body'}, $person, '... self referring schema for LIST');
 is($person->{'links'}->{'create'}->{'data_schema'}, $person, '... self referring schema for POST');

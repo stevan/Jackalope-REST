@@ -48,7 +48,7 @@ use Jackalope::REST::Error::ConflictDetected;
         lazy    => 1,
         default => sub {
             my $self = shift;
-            $self->schema_repository->register_schemas( $self->schemas )
+            [ map { $_->compiled } @{ $self->schema_repository->register_schemas( $self->schemas ) } ]
         }
     );
 
