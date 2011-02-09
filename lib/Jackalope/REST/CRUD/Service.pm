@@ -16,10 +16,10 @@ has 'compiled_schema' => (
         my $repo   = $self->schema_repository;
         my $schema = $self->schema;
         if ( $repo->is_a_schema_ref( $schema ) ) {
-            $repo->get_compiled_schema_by_ref( $schema )->compiled
+            $repo->get_compiled_schema_by_ref( $schema )
         }
         else {
-            $repo->register_schema( $schema )->compiled
+            $repo->register_schema( $schema )
         }
     }
 );
@@ -30,7 +30,7 @@ has 'resource_repository' => (
     required => 1
 );
 
-sub get_all_linkrels { (shift)->compiled_schema->{'links'} }
+sub get_all_linkrels { (shift)->compiled_schema->links }
 
 {
     my %REL_TO_TARGET_CLASS = (
@@ -76,7 +76,7 @@ sub get_all_links_from_schema {
     [
         sort {
             $a->{rel} cmp $b->{rel}
-        } values %{ $self->compiled_schema->{'links'} }
+        } values %{ $self->compiled_schema->links }
     ]
 }
 
@@ -87,7 +87,7 @@ sub get_all_enpoint_links_from_schema {
             $a->{rel} cmp $b->{rel}
         } grep {
             $_->{href} !~ /\:/
-        } values %{ $self->compiled_schema->{'links'} }
+        } values %{ $self->compiled_schema->links }
     ]
 }
 
@@ -98,7 +98,7 @@ sub get_all_non_enpoint_links_from_schema {
             $a->{rel} cmp $b->{rel}
         } grep {
             $_->{href} =~ /\:/
-        } values %{ $self->compiled_schema->{'links'} }
+        } values %{ $self->compiled_schema->links }
     ]
 }
 

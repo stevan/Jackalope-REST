@@ -60,25 +60,25 @@ is(exception{
     $repo->register_schemas( $schemas );
 }, undef, '... did not die when registering this schema');
 
-my $doctor = $repo->get_compiled_schema_by_uri('/schemas/doctor')->compiled;
+my $doctor = $repo->get_compiled_schema_by_uri('/schemas/doctor');
 
 is(
-    $doctor->{'links'}->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'type'},
+    $doctor->links->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'type'},
     'object',
     '... the extended schema embedded in the link is resolved correctly'
 );
 is_deeply(
-    [ sort keys %{ $doctor->{'links'}->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'properties'} } ],
+    [ sort keys %{ $doctor->links->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'properties'} } ],
     [ sort qw[ body version id ]],
     '... the extended schema embedded in the link is resolved correctly'
 );
 is_deeply(
-    [ sort keys %{ $doctor->{'links'}->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'additional_properties'} } ],
+    [ sort keys %{ $doctor->links->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'additional_properties'} } ],
     [ sort qw[ links ] ],
     '... the extended schema embedded in the link is resolved correctly'
 );
 is_deeply(
-    $doctor->{'links'}->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'properties'}->{'body'},
+    $doctor->links->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'properties'}->{'body'},
     {
         'id' => '/schemas/slot',
         'type' => 'object',

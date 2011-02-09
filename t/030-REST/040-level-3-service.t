@@ -48,7 +48,7 @@ use Jackalope::REST::Error::ConflictDetected;
         lazy    => 1,
         default => sub {
             my $self = shift;
-            [ map { $_->compiled } @{ $self->schema_repository->register_schemas( $self->schemas ) } ]
+            $self->schema_repository->register_schemas( $self->schemas )
         }
     );
 
@@ -81,7 +81,7 @@ use Jackalope::REST::Error::ConflictDetected;
         my $self = shift;
         return +{
             map {
-                %{ $_->{'links'} || {} }
+                %{ $_->links || {} }
             } @{ $self->compiled_schemas }
         }
     }
