@@ -6,6 +6,7 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 use Jackalope::REST::Error::BadRequest;
 use Jackalope::REST::Error::BadRequest::ValidationError;
+use Jackalope::REST::Error::UnsupportedMediaType;
 
 use Plack::Request;
 use Jackalope::REST::Util::HashExpander 'expand_hash';
@@ -101,7 +102,31 @@ sub check_data_schema {
             $params = expand_hash( $r->query_parameters->as_hashref_mixed );
         }
         elsif ( $self->link->{'method'} eq 'POST' || $self->link->{'method'} eq 'PUT' ) {
-            $params = $self->serializer->deserialize( $r->content );
+            my $type = $r->content_type;
+            if ( $type eq $self->serializer->content_type ) {
+                $params = $self->serializer->deserialize( $r->content );
+            }
+            elsif ( $type eq 'application/x-www-form-urlencoded' ) {
+                $params = expand_hash( $r->query_parameters->as_hashref_mixed );
+            }
+            elsif ( $type eq 'multipart/form-data' ) {
+                $params = expand_hash( $r->query_parameters->as_hashref_mixed );
+                # now handle the uploads
+                # if there are any
+                if ( scalar $r->upload ) {
+                    my $uploads = $r->uploads->as_hashref_mixed;
+                    foreach my $key ( keys %$uploads ) {
+                        $params->{ $key } = ref $uploads->{ $key } eq 'ARRAY'
+                            ? [ map { $self->transform_upload( $_ ) } @{ $uploads->{ $key } } ]
+                            : $self->transform_upload( $uploads->{ $key } );
+                    }
+                }
+            }
+            else {
+                Jackalope::REST::Error::UnsupportedMediaType->throw(
+                    message => "Could not process message of content-type ($type)"
+                );
+            }
         }
 
         # then, since we have the 'schema'
@@ -136,6 +161,17 @@ sub check_target_schema {
     return $target;
 }
 
+
+sub transform_upload {
+    my ($self, $upload) = @_;
+    return +{
+        size         => $upload->size,
+        path_to_file => $upload->path,
+        content_type => $upload->content_type,
+        filename     => $upload->filename,
+        basename     => $upload->basename
+    }
+}
 
 no Moose::Role; 1;
 

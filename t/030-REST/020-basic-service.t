@@ -113,7 +113,8 @@ test_psgi( app => $app, client => sub {
     #diag("POSTing resource");
     {
         my $req = POST("http://localhost/" => (
-            Content => '{"first_name":"Stevan","last_name":"Little","age":37}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"first_name":"Stevan","last_name":"Little","age":37}'
         ));
         my $res = $cb->($req);
         is($res->code, 201, '... got the right status for creation');
@@ -141,7 +142,8 @@ test_psgi( app => $app, client => sub {
     #diag("Error check");
     {
         my $req = POST("http://localhost/" => (
-            Content => '{"first_name":"Stevan","last_name":"Little"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"first_name":"Stevan","last_name":"Little"}'
         ));
         my $res = $cb->($req);
         is($res->code, 400, '... got the right status for this exception');
@@ -233,7 +235,8 @@ test_psgi( app => $app, client => sub {
     #diag("PUTing updates to the resource we just posted");
     {
         my $req = PUT("http://localhost/1" => (
-            Content => '{"id":"1","version":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"id":"1","version":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
         ));
         my $res = $cb->($req);
         is($res->code, 202, '... got the right status for edit');
@@ -260,7 +263,8 @@ test_psgi( app => $app, client => sub {
     #diag("Error check");
     {
         my $req = PUT("http://localhost/1" => (
-            Content => '{"id":"1","versi":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"id":"1","versi":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
         ));
         my $res = $cb->($req);
         is($res->code, 400, '... got the right status for this exception');
@@ -282,7 +286,8 @@ test_psgi( app => $app, client => sub {
     }
     {
         my $req = PUT("http://localhost/2" => (
-            Content => '{"id":"1","version":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"id":"1","version":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
         ));
         my $res = $cb->($req);
         is($res->code, 400, '... got the right status for this exception');
@@ -298,7 +303,8 @@ test_psgi( app => $app, client => sub {
     }
     {
         my $req = PUT("http://localhost/2" => (
-            Content => '{"id":"2","version":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"id":"2","version":"fe982ce14ce2b2a1c097629adecdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
         ));
         my $res = $cb->($req);
         is($res->code, 404, '... got the right status for not found');
@@ -314,7 +320,8 @@ test_psgi( app => $app, client => sub {
     }
     {
         my $req = PUT("http://localhost/1" => (
-            Content => '{"id":"1","version":"fe982ce14ce2b2a1c09762decdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"id":"1","version":"fe982ce14ce2b2a1c09762decdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
         ));
         my $res = $cb->($req);
         is($res->code, 409, '... got the right status for this exception');
@@ -398,7 +405,8 @@ test_psgi( app => $app, client => sub {
     #diag("POSTing resource");
     {
         my $req = POST("http://localhost/" => (
-            Content => '{"first_name":"Stevan","last_name":"Little","age":37}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"first_name":"Stevan","last_name":"Little","age":37}'
         ));
         my $res = $cb->($req);
         is($res->code, 201, '... got the right status for creation');

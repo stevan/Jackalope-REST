@@ -485,7 +485,8 @@ test_psgi( app => $app, client => sub {
     }
     {
         my $req = POST("http://localhost/slots/1234" => (
-            Content => '{"name":"jsmith"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"name":"jsmith"}'
         ));
         my $res = $cb->($req);
         is($res->code, 201, '... got the right status for booking a slot ');
@@ -513,7 +514,8 @@ test_psgi( app => $app, client => sub {
     }
     {
         my $req = POST("http://localhost/slots/12345" => (
-            Content => '{"name":"jsmith"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"name":"jsmith"}'
         ));
         my $res = $cb->($req);
         is($res->code, 409, '... got the right status for booking a slot that doesnt exist');

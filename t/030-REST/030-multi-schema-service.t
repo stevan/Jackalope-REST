@@ -340,7 +340,8 @@ test_psgi( app => $app, client => sub {
     #diag("POST-ing user");
     {
         my $req = POST("http://localhost/user/" => (
-            Content => '{"username":"stevan"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"username":"stevan"}'
         ));
         my $res = $cb->($req);
         is($res->code, 201, '... got the right status for creation');
@@ -389,7 +390,8 @@ test_psgi( app => $app, client => sub {
     #diag("POST-ing product");
     {
         my $req = POST("http://localhost/product/" => (
-            Content => '{"sku":"123456","desc":"disco-ball"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"sku":"123456","desc":"disco-ball"}'
         ));
         my $res = $cb->($req);
         is($res->code, 201, '... got the right status for creation');
@@ -416,7 +418,8 @@ test_psgi( app => $app, client => sub {
     #diag("POST-ing product");
     {
         my $req = POST("http://localhost/product/" => (
-            Content => '{"sku":"227272","desc":"dancin-shoes"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"sku":"227272","desc":"dancin-shoes"}'
         ));
         my $res = $cb->($req);
         is($res->code, 201, '... got the right status for creation');
@@ -443,7 +446,8 @@ test_psgi( app => $app, client => sub {
     #diag("POST-ing product");
     {
         my $req = POST("http://localhost/product/" => (
-            Content => '{"sku":"3838372","desc":"polyester-suit"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"sku":"3838372","desc":"polyester-suit"}'
         ));
         my $res = $cb->($req);
         is($res->code, 201, '... got the right status for creation');
@@ -470,7 +474,8 @@ test_psgi( app => $app, client => sub {
     #diag("POST-ing cart");
     {
         my $req = POST("http://localhost/cart/" => (
-            Content => $serializer->serialize({
+            'Content-Type' => 'application/json',
+            'Content'      => $serializer->serialize({
                 user  => { '$id' => '1', type_of => 'test/user' },
                 items => [
                     { '$id' => '1', type_of => 'test/product' },
@@ -605,7 +610,8 @@ test_psgi( app => $app, client => sub {
     #diag("PUT-ing a new item");
     {
         my $req = PUT("http://localhost/cart/1/add_item" => (
-            Content => '{"$id":"3","type_of":"test/product"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"$id":"3","type_of":"test/product"}'
         ));
         my $res = $cb->($req);
         is($res->code, 202, '... got the right status for adding an item');
@@ -683,7 +689,8 @@ test_psgi( app => $app, client => sub {
     #diag("PUT-ing to delete the new item from cart");
     {
         my $req = PUT("http://localhost/cart/1/remove_item" => (
-            Content => '{"$id":"3","type_of":"test/product"}'
+            'Content-Type' => 'application/json',
+            'Content'      => '{"$id":"3","type_of":"test/product"}'
         ));
         my $res = $cb->($req);
         is($res->code, 202, '... got the right status for removing an item');
