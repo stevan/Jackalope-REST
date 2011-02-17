@@ -24,7 +24,7 @@ my $fixtures = Test::Jackalope::Fixtures->new(
     repo            => $repo
 );
 
-foreach my $type ( qw[ resource resource/ref service/crud ] ) {
+foreach my $type ( qw[ resource resource/ref service/crud resource/upload ] ) {
     my $schema = $repo->get_compiled_schema_by_uri('jackalope/rest/' . $type)->compiled;
     validation_pass(
         $repo->validate(

@@ -20,9 +20,10 @@ sub BUILD {
         resource 'REST' => as {
             install_from( $self->fixtures_root->subdir('REST') );
 
-            file 'resource'     => 'resource.json';
-            file 'resource_ref' => 'resource_ref.json';
-            file 'service_crud' => 'service_crud.json';
+            file 'resource'        => 'resource.json';
+            file 'resource_ref'    => 'resource_ref.json';
+            file 'resource_upload' => 'resource_upload.json';
+            file 'service_crud'    => 'service_crud.json';
         };
     };
 }

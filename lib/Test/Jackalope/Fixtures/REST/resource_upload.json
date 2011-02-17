@@ -1,0 +1,42 @@
+[
+    {
+        "schema" : { "$ref" : "jackalope/rest/resource/upload" },
+        "pass" : [
+            { "path_to_file" : "/tmp/foo", "filename" : "C://MyDocuments/foo" }
+        ],
+        "fail" : [
+            null,
+            true,
+            false,
+            1,
+            1.5,
+            "Hello",
+            [],
+            [ 1, 5, 6 ],
+            { "foo" : "bar" }
+        ]
+    },
+    {
+        "schema" : { "$ref" : "jackalope/rest/resource/upload" },
+        "pass" : [
+            {
+                "path_to_file" : "/tmp/foo",
+                "filename" : "C://MyDocuments/foo",
+                "size" : 100,
+                "content_type" : "text/plain",
+                "basename" : "foo"
+            }
+        ],
+        "fail" : [
+            null,
+            true,
+            false,
+            1,
+            1.5,
+            "Hello",
+            [],
+            [ 1, 5, 6 ],
+            { "foo" : "bar" }
+        ]
+    }
+]
