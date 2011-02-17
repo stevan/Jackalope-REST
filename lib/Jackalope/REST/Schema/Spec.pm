@@ -12,6 +12,8 @@ around 'all_spec_builder_methods' => sub {
     return (
         $self->$next(),
         qw[
+            file_upload
+
             resource
             resource_ref
 
@@ -22,6 +24,35 @@ around 'all_spec_builder_methods' => sub {
         ]
     );
 };
+
+sub file_upload {
+    my $self = shift;
+    return +{
+        id          => "jackalope/rest/resource/upload",
+        title       => "The schema to represent the standard file upload",
+        description => q[
+            When the default target object encounters a multipart
+            message in a request, it will process the uploads in
+            a standard way to turn them into data that is compatible
+            with this schema.
+
+            This schema is optional, and the method in the target
+            class that transforms it is overrideable. However, this
+            is a probably a good starting point so we add it into
+            our core.
+        ],
+        type        => "object",
+        properties  => {
+            path_to_file => { type => 'string', description => 'Path to the temporary file that was created for the upload' },
+            filename     => { type => 'string', description => 'The client side filename of the file that was uploaded' },
+        },
+        additional_properties => {
+            basename     => { type => 'string', description => 'The basename of the filename' },
+            size         => { type => 'number', description => 'The size of the file that was uploaded' },
+            content_type => { type => 'string', description => 'The content-type of the file that was uploaded' },
+        }
+    }
+}
 
 ## ------------------------------------------------------------------
 ## Resource Schema
