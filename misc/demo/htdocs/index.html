@@ -62,7 +62,7 @@ h1 {
 <script type="text/javascript">
 
 function call_ajax ( opts ) {
-    $.ajax({
+    var ajax_opts = {
         // data
         "url"  : opts.url,
         "type" : opts.method,
@@ -90,15 +90,21 @@ function call_ajax ( opts ) {
                 '<pre>' + JSON.stringify( data, null, '  ') + '</pre>'
             );
         }
-    });
+    };
+
+    if ( opts.method == 'POST' || opts.method == 'PUT' ) {
+        ajax_opts.contentType = 'application/json';
+    }
+
+    $.ajax( ajax_opts );
 }
 
 var default_instructions = '<p>This is an example Jackalope REST web servce, you can fill out the form on the left, or choose an example from the list above.</p><p>Try changing the "method" of any example to see a 405 Method Not Allowed and the "Allow" header in the response.</p>';
 
 var examples = {
     'describedby' : {
-        url    : 'people/schema',
-        method : 'GET',
+        url    : 'people/',
+        method : 'OPTIONS',
         instructions : 'This will return the schema used to create this web service.'
     },
     'list'   : {
@@ -156,7 +162,7 @@ function choose_example () {
     }
     else {
         $('#url').val( '' );
-        $('#method').val( 'GET' );
+        $('#method').val( 'OPTIONS' );
         $('#headers').val( '' );
         $('#content').val( '' );
         $('#rest_instructions .instructions').html( default_instructions );
@@ -207,6 +213,7 @@ $(document).ready(function () {
             <div class="label">Method</div>
             <div>
                 <select id="method">
+                    <option value="OPTIONS">OPTIONS</option>
                     <option value="GET">GET</option>
                     <option value="PUT">PUT</option>
                     <option value="POST">POST</option>
