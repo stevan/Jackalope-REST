@@ -103,13 +103,13 @@ sub check_data_schema {
         }
         elsif ( $self->link->{'method'} eq 'POST' || $self->link->{'method'} eq 'PUT' ) {
             my $type = $r->content_type;
-            if ( $type eq $self->serializer->content_type ) {
+            if ( index( $type, $self->serializer->content_type ) != -1 ) {
                 $params = $self->serializer->deserialize( $r->content );
             }
-            elsif ( $type eq 'application/x-www-form-urlencoded' ) {
+            elsif ( index( $type, 'application/x-www-form-urlencoded' ) != -1 ) {
                 $params = expand_hash( $r->query_parameters->as_hashref_mixed );
             }
-            elsif ( $type eq 'multipart/form-data' ) {
+            elsif ( index( $type, 'multipart/form-data' ) != -1 ) {
                 $params = expand_hash( $r->query_parameters->as_hashref_mixed );
                 # now handle the uploads
                 # if there are any
