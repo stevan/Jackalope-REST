@@ -4,6 +4,8 @@ use Moose::Role;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
+use utf8 ();
+
 use Jackalope::REST::Error::BadRequest;
 use Jackalope::REST::Error::BadRequest::ValidationError;
 use Jackalope::REST::Error::UnsupportedMediaType;
@@ -48,6 +50,10 @@ sub process_psgi_output {
     push @{ $psgi->[1] } => ('Content-Type' => $self->serializer->content_type);
 
     $psgi->[2]->[0] = $self->serializer->serialize( $psgi->[2]->[0] );
+
+    if ( utf8::is_utf8( $psgi->[2]->[0] ) ) {
+        utf8::encode( $psgi->[2]->[0] );
+    }
 
     $psgi;
 }
