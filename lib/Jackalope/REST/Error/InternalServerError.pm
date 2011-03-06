@@ -4,8 +4,10 @@ use Moose;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'HTTP::Throwable::InternalServerError';
-   with 'Jackalope::REST::Error';
+with 'HTTP::Throwable',
+     'MooseX::StrictConstructor::Role::Object',
+     'Jackalope::REST::Error',
+     'HTTP::Throwable::Role::Status::InternalServerError';
 
 __PACKAGE__->meta->make_immutable( inline_constructor => 0 );
 

@@ -6,6 +6,10 @@ use Plack::Util;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
+sub body_headers { [] }
+sub as_string    { (shift)->status_line }
+sub body         { (shift)->pack }
+
 sub pack {
     my $self = shift;
     {

@@ -4,8 +4,10 @@ use Moose;
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
-extends 'HTTP::Throwable::UnsupportedMediaType';
-   with 'Jackalope::REST::Error';
+with 'HTTP::Throwable',
+     'MooseX::StrictConstructor::Role::Object',
+     'Jackalope::REST::Error',
+     'HTTP::Throwable::Role::Status::UnsupportedMediaType';
 
 __PACKAGE__->meta->make_immutable;
 
