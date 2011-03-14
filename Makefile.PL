@@ -7,6 +7,7 @@ all_from 'lib/Jackalope/REST.pm';
 license 'perl';
 
 requires 'Jackalope'                  => 0;
+requires 'MooseX::NonMoose'           => 0;
 requires 'HTTP::Throwable'            => 0.011;
 requires 'Plack'                      => 0;
 requires 'CGI::Expand'                => 0;
