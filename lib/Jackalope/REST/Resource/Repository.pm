@@ -74,8 +74,15 @@ sub update_resource {
     # grab the old resource at this id ...
     my $old_resource = $self->get_resource( $id );
 
-    ($old_resource->compare_version( $updated_resource ))
-        || Jackalope::REST::Error::ConflictDetected->throw(message => "resource submitted has out of date version");
+    unless ( $old_resource->compare_version( $updated_resource ) ) {
+
+        # use Data::Diff qw( Diff );
+        # use Data::Dumper qw( Dumper );
+        # warn Dumper [ $old_resource->version, $updated_resource->version ];
+        # warn Dumper( Diff( $old_resource->body, $updated_resource->body ) );
+
+        Jackalope::REST::Error::ConflictDetected->throw(message => "resource submitted has out of date version");
+    }
 
     # commit the data and re-wrap it
     return $self->wrap_data(
