@@ -107,7 +107,7 @@ sub resource {
             }
         },
         additional_properties => {
-            links   => {
+            links => {
                 type        => "array",
                 items       => { '$ref' => "jackalope/core/hyperlink" },
                 description => q[
@@ -115,6 +115,14 @@ sub resource {
                     capabilities of given resource, the consumer of
                     the resource can use these links to perform
                     different actions.
+                ]
+            },
+            metadata => {
+                type        => "object",
+                description => q[
+                    This is a free-form metadata object which
+                    can be used to provide additional data to
+                    things which may need to process the schema.
                 ]
             }
         }

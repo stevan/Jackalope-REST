@@ -38,6 +38,15 @@ has 'links' => (
     }
 );
 
+has 'metadata' => (
+    traits    => [ 'Hash' ],
+    is        => 'ro',
+    isa       => 'HashRef',
+    lazy      => 1,
+    default   => sub { +{} },
+    predicate => 'has_metadata'
+);
+
 # force the generation
 # of the version
 sub BUILD { (shift)->version }
@@ -96,7 +105,10 @@ sub pack {
         id      => "" . $self->id,
         body    => (blessed $self->body && $self->body->can('pack') ? $self->body->pack : $self->body),
         version => $self->version,
-        links   => $self->links
+        links   => $self->links,
+        ( $self->has_metadata
+            ? ( metadata => $self->metadata )
+            : ())
     };
 }
 

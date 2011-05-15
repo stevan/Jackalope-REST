@@ -74,7 +74,7 @@ is_deeply(
 );
 is_deeply(
     [ sort keys %{ $doctor->links->{'doctor.open_slots'}->{'target_schema'}->{'items'}->{'additional_properties'} } ],
-    [ sort qw[ links ] ],
+    [ sort qw[ links metadata ] ],
     '... the extended schema embedded in the link is resolved correctly'
 );
 is_deeply(
