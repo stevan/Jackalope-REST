@@ -1,11 +1,11 @@
 package Jackalope::REST::Error::BadRequest;
 use Moose;
+use MooseX::StrictConstructor;
 
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
 with 'HTTP::Throwable',
-     'MooseX::StrictConstructor::Role::Object',
      'Jackalope::REST::Error',
      'HTTP::Throwable::Role::Status::BadRequest';
 
