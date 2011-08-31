@@ -11,11 +11,11 @@ This part of Jackalope starts to get more opinionated. Jackalope-REST provides
 all the building blocks for constructing a REST application using any kind of
 custom workflow you would like.
 
-We extend the base Jackalope spec for this part, adding to it a 'web/resource' and
-'web/resource/ref' schemas to help you manage your resources. And the
-'jackalope/rest/service/read-only', 'jackalope/rest/service/non-editable' and
-'jackalope/rest/service/crud' schemas, which can be extended to add a reasonable
-set of default 'linkrels' for a schema. These can all be seen in the
+We extend the base Jackalope spec for this part, adding to it a `web/resource` and
+`web/resource/ref` schemas to help you manage your resources. And the
+`jackalope/rest/service/read-only`, `jackalope/rest/service/non-editable` and
+`jackalope/rest/service/crud` schemas, which can be extended to add a reasonable
+set of default `linkrels` for a schema. These can all be seen in the
 Jackalope::REST::Schema::Spec module.
 
 These are the two core components of the REST part of Jackalope, Resources and
@@ -33,10 +33,10 @@ A resource is the transport format, it looks something like this:
         links   : [ <array of hyperlink items> ]
     }
 
-The 'id' field is the lookup key for this given resource in the repository and the
-'body' is what you have stored in the resource repository. The 'version' is a digest
+The `id` field is the lookup key for this given resource in the repository and the
+`body` is what you have stored in the resource repository. The `version` is a digest
 of the body constructed by creating an SHA-256 hash of the cannonical JSON of the body.
-And then finally the optional 'links' is an array of 'hyperlink' items which represent
+And then finally the optional `links` is an array of `hyperlink` items which represent
 the other available services for this resource (ex: read, update, delete, etc.)
 
 We also have a concept of resource references, which is a representation of a
@@ -49,14 +49,14 @@ reference to a resource. It looks something like this:
         link    : <hyperlink to read this resource>
      }
 
-The '$id' field is the same as the 'id' field in a resource, the 'type_of' field
-is the schema this '$id' refers too. Then optionally we have a 'version', which is
+The `$id` field is the same as the `id` field in a resource, the `type_of` field
+is the schema this `$id` refers too. Then optionally we have a `version`, which is
 as described above and could be used in your code to check that the resource being
-referred to has not changed. We also optionally have a 'link', which is an 'hyperlink'
-of the 'read' service for this resource (basically a link to the resource itself).
+referred to has not changed. We also optionally have a `link`, which is an `hyperlink`
+of the `read` service for this resource (basically a link to the resource itself).
 
 The next concept is the resource repository. Currently we supply a basic role that will
-wrap around your data repository and you only need worry about the 'body' of the resource
+wrap around your data repository and you only need worry about the `body` of the resource
 and it will handle wrapping that into a proper resource as well as the generation and
 checking the version string. This currently plugs in directly to the built-in CRUD
 service, but can also be useful outside of that as well.
@@ -88,7 +88,7 @@ Jackalope-REST-CRUD.
 #### CRUD Services
 
 The services take a Jackalope schema as input, typically one that extends the
-'jackalope/rest/service/crud' schema, and a resource repository and creates a web
+`jackalope/rest/service/crud` schema, and a resource repository and creates a web
 service with the following features.
 
 - options
@@ -108,7 +108,7 @@ service with the following features.
         - optional parameters are taken, which the connected resource repository
           can optionally handle
             - query : the search query
-            - attrs : attributes such as 'limit' and 'skip'
+            - attrs : attributes such as `limit` and `skip`
     - The result is a list of resources, each with embedded hypermedia controls
         - It returns a 200 (OK) status code
 - creation
@@ -139,7 +139,7 @@ service with the following features.
             - if it does not match it returns a 409 (Conflict) status with no content
 
 We also check to make sure that the proper HTTP method is used for the proper
-URI and throw a 405 (Method Not Allowed) error with an 'Allow' header properly
+URI and throw a 405 (Method Not Allowed) error with an `Allow` header properly
 populated.
 
 ## Installation
