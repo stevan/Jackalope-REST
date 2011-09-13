@@ -24,7 +24,7 @@ sub process_operation {
     my ($self, $operation, $r, $args) = @_;
     my $params = $self->sanitize_and_prepare_input( $r );
     my $result = $self->resource_repository->$operation( @$args, $params );
-    $self->verify_and_prepare_output( $result );
+    $result = $self->verify_and_prepare_output( $result );
     $self->generate_links_for_output( $result );
     return $self->process_psgi_output( $self->operation_callback( $result ) );
 }
