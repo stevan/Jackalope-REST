@@ -47,7 +47,7 @@ my $c = container $j => as {
     service 'MySchema' => {
         id         => 'simple/person',
         title      => 'This is a simple person schema',
-        extends    => { '$ref' => 'jackalope/rest/service/crud' },
+        extends    => { __ref__ => 'jackalope/rest/service/crud' },
         properties => {
             first_name => { type => 'string' },
             last_name  => { type => 'string' },
@@ -83,7 +83,7 @@ does_ok($service->resource_repository, 'Jackalope::REST::Resource::Repository');
 is_deeply($service->schema, {
     id         => 'simple/person',
     title      => 'This is a simple person schema',
-    extends    => { '$ref' => 'jackalope/rest/service/crud' },
+    extends    => { __ref__ => 'jackalope/rest/service/crud' },
     properties => {
         first_name => { type => 'string' },
         last_name  => { type => 'string' },
@@ -107,7 +107,7 @@ test_psgi( app => $app, client => sub {
         is($res->code, 200, '... got the right status for list ');
         my $resource = $serializer->deserialize( $res->content );
         is( $resource->{id}, 'simple/person', '... got the right id');
-        is( $resource->{version}, '92d7a5505ef467c56dc083961e335e48180b07468a4efdd78d4dd9015394a584', '... got the right version');
+        is( $resource->{version}, 'aad8bb0aa00dbe0b1332e3a9e3bd5937121a7f79d183eb9f5df5894a38cc736e', '... got the right version');
         is_deeply(
             $resource->{links},
             [

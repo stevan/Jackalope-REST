@@ -1,6 +1,6 @@
 [
     {
-        "schema" : { "$ref" : "jackalope/rest/resource/upload" },
+        "schema" : { "__ref__" : "jackalope/rest/resource/upload" },
         "pass" : [
             { "path_to_file" : "/tmp/foo", "filename" : "C://MyDocuments/foo" }
         ],
@@ -17,7 +17,7 @@
         ]
     },
     {
-        "schema" : { "$ref" : "jackalope/rest/resource/upload" },
+        "schema" : { "__ref__" : "jackalope/rest/resource/upload" },
         "pass" : [
             {
                 "path_to_file" : "/tmp/foo",

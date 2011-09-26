@@ -344,9 +344,9 @@ my $c = container $j => as {
                     target_schema => {
                         type  => 'array',
                         items => {
-                            extends    => { '$ref' => 'jackalope/rest/resource' },
+                            extends    => { __ref__ => 'jackalope/rest/resource' },
                             properties => {
-                                body => { '$ref' => '/schemas/slot' }
+                                body => { __ref__ => '/schemas/slot' }
                             }
                         }
                     },
@@ -361,7 +361,7 @@ my $c = container $j => as {
                 date   => { type => 'number' },
                 start  => { type => 'number' },
                 end    => { type => 'number' },
-                doctor => { '$ref' => '/schemas/doctor' },
+                doctor => { __ref__ => '/schemas/doctor' },
             },
             links => {
                 # link to book an appointment
@@ -371,12 +371,12 @@ my $c = container $j => as {
                     method        => 'POST',
                     uri_schema    => { id => { type => 'string' } },
                     # INPUT : patient object
-                    data_schema   => { '$ref' => '/schemas/patient' },
+                    data_schema   => { __ref__ => '/schemas/patient' },
                     # OUTPUT : appointment object (wrapped as resource)
                     target_schema => {
-                        extends    => { '$ref' => 'jackalope/rest/resource' },
+                        extends    => { __ref__ => 'jackalope/rest/resource' },
                         properties => {
-                            body => { '$ref' => '/schemas/appointment' }
+                            body => { __ref__ => '/schemas/appointment' }
                         }
                     }
                 }
@@ -387,8 +387,8 @@ my $c = container $j => as {
             id         => '/schemas/appointment',
             type       => 'object',
             properties => {
-                slot    => { '$ref' => '/schemas/slot' },
-                patient => { '$ref' => '/schemas/patient' },
+                slot    => { __ref__ => '/schemas/slot' },
+                patient => { __ref__ => '/schemas/patient' },
             },
             links => {
                 # way to just view the appointment ...
@@ -399,9 +399,9 @@ my $c = container $j => as {
                     uri_schema    => { id => { type => 'string' } },
                     # OUTPUT : appointment object (wrapped as resource)
                     target_schema => {
-                        extends    => { '$ref' => 'jackalope/rest/resource' },
+                        extends    => { __ref__ => 'jackalope/rest/resource' },
                         properties => {
-                            body => { '$ref' => '#' }
+                            body => { __ref__ => '#' }
                         }
                     }
                 },

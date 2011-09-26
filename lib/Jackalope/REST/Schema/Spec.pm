@@ -109,7 +109,7 @@ sub resource {
         additional_properties => {
             links => {
                 type        => "array",
-                items       => { '$ref' => "jackalope/core/hyperlink" },
+                items       => { __ref__ => "jackalope/core/hyperlink" },
                 description => q[
                     This is a list of links which represent the
                     capabilities of given resource, the consumer of
@@ -150,7 +150,7 @@ sub resource_ref {
         ],
         type        => "object",
         properties  => {
-            '$id' => {
+            __id__ => {
                 type        => "string",
                 description => q[
                     This is the lookup ID which can be
@@ -168,7 +168,7 @@ sub resource_ref {
         },
         additional_properties => {
             link    => {
-                extends               => { '$ref' => 'jackalope/core/hyperlink' },
+                extends               => { __ref__ => 'jackalope/core/hyperlink' },
                 properties            => { rel    => { type => 'string', literal => 'read' } },
                 additional_properties => { method => { type => 'string', literal => 'GET'  } },
                 description           => q[
@@ -212,7 +212,7 @@ sub service_discoverable {
                 method        => 'OPTIONS',
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
                         body => {
                             type  => 'object',
@@ -230,7 +230,7 @@ sub service_readonly {
     return +{
         id      => 'jackalope/rest/service/read-only',
         title   => 'This is a simple read-only REST enabled schema',
-        extends => { '$ref' => 'jackalope/rest/service/discoverable' },
+        extends => { __ref__ => 'jackalope/rest/service/discoverable' },
         links   => {
             list => {
                 rel           => 'list',
@@ -247,9 +247,9 @@ sub service_readonly {
                     type  => "array",
                     items => {
                         type       => 'object',
-                        extends    => { '$ref' => 'jackalope/rest/resource' },
+                        extends    => { __ref__ => 'jackalope/rest/resource' },
                         properties => {
-                            body => { '$ref' => '#' },
+                            body => { __ref__ => '#' },
                         }
                     }
                 },
@@ -260,9 +260,9 @@ sub service_readonly {
                 method        => 'GET',
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
                 uri_schema    => {
@@ -278,18 +278,18 @@ sub service_non_editable {
     return +{
         id      => 'jackalope/rest/service/non-editable',
         title   => 'This is a simple REST enabled schema',
-        extends => { '$ref' => 'jackalope/rest/service/read-only' },
+        extends => { __ref__ => 'jackalope/rest/service/read-only' },
         links   => {
             create => {
                 rel           => 'create',
                 href          => '/',
                 method        => 'POST',
-                data_schema   => { '$ref' => '#' },
+                data_schema   => { __ref__ => '#' },
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
             },
@@ -310,7 +310,7 @@ sub service {
     return +{
         id      => 'jackalope/rest/service/crud',
         title   => 'This is a simple REST enabled schema',
-        extends => { '$ref' => 'jackalope/rest/service/non-editable' },
+        extends => { __ref__ => 'jackalope/rest/service/non-editable' },
         links   => {
             edit => {
                 rel           => 'edit',
@@ -318,16 +318,16 @@ sub service {
                 method        => 'PUT',
                 data_schema   => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
                 uri_schema    => {

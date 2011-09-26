@@ -1,6 +1,6 @@
 [
     {
-        "schema" : { "$ref" : "jackalope/rest/resource" },
+        "schema" : { "__ref__" : "jackalope/rest/resource" },
         "pass" : [
             {
                 "id"      : "id:1010",
@@ -62,7 +62,7 @@
     },
     {
         "schema" : {
-            "extends"    : { "$ref" : "jackalope/rest/resource" },
+            "extends"    : { "__ref__" : "jackalope/rest/resource" },
             "properties" : {
                 "body" : {
                     "type"       : "object",

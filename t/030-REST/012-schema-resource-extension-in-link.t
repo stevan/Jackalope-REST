@@ -30,9 +30,9 @@ my $schemas = [
                 target_schema => {
                     type  => 'array',
                     items => {
-                        extends    => { '$ref' => 'jackalope/rest/resource' },
+                        extends    => { __ref__ => 'jackalope/rest/resource' },
                         properties => {
-                            body => { '$ref' => '/schemas/slot' }
+                            body => { __ref__ => '/schemas/slot' }
                         }
                     }
                 },

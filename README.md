@@ -49,8 +49,8 @@ reference to a resource. It looks something like this:
         link    : <hyperlink to read this resource>
      }
 
-The '$id' field is the same as the 'id' field in a resource, the 'type_of' field
-is the schema this '$id' refers too. Then optionally we have a 'version', which is
+The __id__ field is the same as the 'id' field in a resource, the 'type_of' field
+is the schema this __id__ refers too. Then optionally we have a 'version', which is
 as described above and could be used in your code to check that the resource being
 referred to has not changed. We also optionally have a 'link', which is an 'hyperlink'
 of the 'read' service for this resource (basically a link to the resource itself).

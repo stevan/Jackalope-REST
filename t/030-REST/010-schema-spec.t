@@ -28,7 +28,7 @@ foreach my $type ( qw[ resource resource/ref service/crud resource/upload ] ) {
     my $schema = $repo->get_compiled_schema_by_uri('jackalope/rest/' . $type)->compiled;
     validation_pass(
         $repo->validate(
-            { '$ref' => 'jackalope/core/types/object' },
+            { __ref__ => 'jackalope/core/types/object' },
             $schema,
         ),
         '... validate the compiled ' . $type . ' type with the schema type'

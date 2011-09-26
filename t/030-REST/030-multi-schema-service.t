@@ -63,7 +63,7 @@ use Jackalope::REST::Resource::Repository::Simple;
         my ($self, $id, $data) = @_;
 
         my $cart = $self->db->{ $id };
-        $cart->{'items'} = [ grep { $_->{'$id'} != $data->{'$id'} } @{ $cart->{'items'} } ];
+        $cart->{'items'} = [ grep { $_->{__id__} != $data->{__id__} } @{ $cart->{'items'} } ];
         return $self->wrap_data(
             $id,
             $self->inflate_user_and_items( clone( $cart ) )
@@ -73,7 +73,7 @@ use Jackalope::REST::Resource::Repository::Simple;
     sub inflate_user_and_items {
         my ($self, $cart) = @_;
 
-        my $user = $self->user_service->resource_repository->get_resource( $cart->{'user'}->{'$id'} );
+        my $user = $self->user_service->resource_repository->get_resource( $cart->{'user'}->{__id__} );
         $self->user_service->generate_links_for_resource(
             $user,
             $self->user_service->get_all_non_enpoint_links_from_schema
@@ -82,7 +82,7 @@ use Jackalope::REST::Resource::Repository::Simple;
 
         $cart->{'items'} = [
             map {
-                my $product = $self->product_service->resource_repository->get_resource( $_->{'$id'} );
+                my $product = $self->product_service->resource_repository->get_resource( $_->{__id__} );
                 $self->product_service->generate_links_for_resource(
                     $product,
                     $self->product_service->get_all_non_enpoint_links_from_schema
@@ -128,7 +128,7 @@ my $c = container $j => as {
 
     service 'ProductSchema' => {
         id         => "test/product",
-        extends    => { '$ref' => 'jackalope/rest/service/crud' },
+        extends    => { __ref__ => 'jackalope/rest/service/crud' },
         properties => {
             sku  => { type => "string" },
             desc => { type => "string" }
@@ -153,7 +153,7 @@ my $c = container $j => as {
 
     service 'UserSchema' => {
         id         => "test/user",
-        extends    => { '$ref' => 'jackalope/rest/service/crud' },
+        extends    => { __ref__ => 'jackalope/rest/service/crud' },
         properties => {
             username => { type => "string" }
         }
@@ -180,14 +180,14 @@ my $c = container $j => as {
         type       => "object",
         properties => {
             user => {
-                extends    => { '$ref' => "jackalope/rest/resource" },
-                properties => { body => { '$ref' => "test/user" } }
+                extends    => { __ref__ => "jackalope/rest/resource" },
+                properties => { body => { __ref__ => "test/user" } }
             },
             items  => {
                 type  => "array",
                 items => {
-                    extends    => { '$ref' => "jackalope/rest/resource" },
-                    properties => { body => { '$ref' => "test/product" } }
+                    extends    => { __ref__ => "jackalope/rest/resource" },
+                    properties => { body => { __ref__ => "test/product" } }
                 }
             }
         },
@@ -201,13 +201,13 @@ my $c = container $j => as {
                     type       => 'object',
                     properties => {
                         user  => {
-                            extends    => { '$ref' => 'jackalope/rest/resource/ref' },
+                            extends    => { __ref__ => 'jackalope/rest/resource/ref' },
                             properties => { type_of => { type => "string", literal => "test/user" } }
                         },
                         items => {
                             type  => 'array',
                             items => {
-                                extends    => { '$ref' => 'jackalope/rest/resource/ref' },
+                                extends    => { __ref__ => 'jackalope/rest/resource/ref' },
                                 properties => { type_of => { type => "string", literal => "test/product" } }
                             }
                         },
@@ -215,9 +215,9 @@ my $c = container $j => as {
                 },
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
             },
@@ -227,9 +227,9 @@ my $c = container $j => as {
                 method        => 'GET',
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
                 uri_schema    => {
@@ -241,14 +241,14 @@ my $c = container $j => as {
                 href          => '/:id/add_item',
                 method        => 'PUT',
                 data_schema   => {
-                    extends    => { '$ref' => 'jackalope/rest/resource/ref' },
+                    extends    => { __ref__ => 'jackalope/rest/resource/ref' },
                     properties => { type_of => { type => "string", literal => "test/product" } }
                 },
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
                 uri_schema    => {
@@ -260,14 +260,14 @@ my $c = container $j => as {
                 href          => '/:id/remove_item',
                 method        => 'PUT',
                 data_schema   => {
-                    extends    => { '$ref' => 'jackalope/rest/resource/ref' },
+                    extends    => { __ref__ => 'jackalope/rest/resource/ref' },
                     properties => { type_of => { type => "string", literal => "test/product" } }
                 },
                 target_schema => {
                     type       => 'object',
-                    extends    => { '$ref' => 'jackalope/rest/resource' },
+                    extends    => { __ref__ => 'jackalope/rest/resource' },
                     properties => {
-                        body => { '$ref' => '#' },
+                        body => { __ref__ => '#' },
                     }
                 },
                 uri_schema    => {
@@ -476,10 +476,10 @@ test_psgi( app => $app, client => sub {
         my $req = POST("http://localhost/cart/" => (
             'Content-Type' => 'application/json',
             'Content'      => $serializer->serialize({
-                user  => { '$id' => '1', type_of => 'test/user' },
+                user  => { __id__ => '1', type_of => 'test/user' },
                 items => [
-                    { '$id' => '1', type_of => 'test/product' },
-                    { '$id' => '2', type_of => 'test/product' }
+                    { __id__ => '1', type_of => 'test/product' },
+                    { __id__ => '2', type_of => 'test/product' }
                 ]
             })
         ));
@@ -611,7 +611,7 @@ test_psgi( app => $app, client => sub {
     {
         my $req = PUT("http://localhost/cart/1/add_item" => (
             'Content-Type' => 'application/json',
-            'Content'      => '{"$id":"3","type_of":"test/product"}'
+            'Content'      => '{"__id__":"3","type_of":"test/product"}'
         ));
         my $res = $cb->($req);
         is($res->code, 202, '... got the right status for adding an item');
@@ -690,7 +690,7 @@ test_psgi( app => $app, client => sub {
     {
         my $req = PUT("http://localhost/cart/1/remove_item" => (
             'Content-Type' => 'application/json',
-            'Content'      => '{"$id":"3","type_of":"test/product"}'
+            'Content'      => '{"__id__":"3","type_of":"test/product"}'
         ));
         my $res = $cb->($req);
         is($res->code, 202, '... got the right status for removing an item');
