@@ -42,7 +42,16 @@ sub to_app {
     return sub {
         my $env  = shift;
         my $path = $env->{PATH_INFO};
-        foreach my $uri_base ( sort { $a cmp $b } keys %service_map ) {
+        # NOTE:
+        # we are sorting the service map keys
+        # with the longest first, this should
+        # allow you to have two services like:
+        #   - /foo
+        #   - /foo/bar
+        # and have /foo/bar not be matched
+        # by /foo
+        # - SL
+        foreach my $uri_base ( sort { length($b) <=> length($a) } keys %service_map ) {
             if ($path =~ /^$uri_base/) {
                 return $service_map{ $uri_base }->to_app->( $env );
             }
