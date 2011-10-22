@@ -3,11 +3,11 @@
         "schema" : { "__ref__" : "jackalope/rest/resource/ref" },
         "pass" : [
             { "__id__" : "1", "type_of" : "some/simple/schema" },
-            { "__id__" : "1", "type_of" : "some/simple/schema", "version" : "2i29219jkjklewioewjklewk" },
+            { "__id__" : "1", "type_of" : "some/simple/schema", "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314" },
             {
                 "__id__" : "1",
                 "type_of" : "some/simple/schema",
-                "version" : "2i29219jkjklewioewjklewk",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "link" : { "rel" : "read", "method" : "GET", "href" : "some/simple/1" }
             },
             {
@@ -49,7 +49,7 @@
         },
         "pass" : [
             { "__id__" : "1", "type_of" : "some/simple/schema" },
-            { "__id__" : "1", "type_of" : "some/simple/schema", "version" : "2i29219jkjklewioewjklewk" }
+            { "__id__" : "1", "type_of" : "some/simple/schema", "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314" }
         ],
         "fail" : [
             { "__id__" : "1", "type_of" : "some/other/simple/schema" },

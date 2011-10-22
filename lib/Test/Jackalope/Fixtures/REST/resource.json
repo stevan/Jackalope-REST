@@ -5,13 +5,13 @@
             {
                 "id"      : "id:1010",
                 "body"    : "Data",
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links"   : []
             },
             {
                 "id"      : "id:1010",
                 "body"    : "Data",
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403"
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314"
             },
             {
                 "id"      : "id:something",
@@ -20,7 +20,7 @@
                     "last_name"  : "Little",
                     "age"        : 37
                 },
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links" : [
                     { "rel" : "self",   "href" : "/",  "method" : "GET"    },
                     { "rel" : "create", "href" : "/",  "method" : "POST"   },
@@ -34,18 +34,18 @@
             {
                 "id"      : "id:1010",
                 "body"    : "Data",
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links"   : {}
             },
             {
                 "id"      : [],
                 "body"    : "Data",
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links"   : []
             },
             {
                 "body"    : "Data",
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links"   : []
             },
             {
@@ -82,7 +82,7 @@
                     "last_name"  : "Little",
                     "age"        : 37
                 },
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links" : [
                     { "rel" : "self",   "href" : "/",  "method" : "GET"    },
                     { "rel" : "create", "href" : "/",  "method" : "POST"   },
@@ -96,13 +96,13 @@
             {
                 "id"      : "id:1010",
                 "body"    : "Data",
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links"   : []
             },
             {
                 "id"      : "id:1012",
                 "body"    : { "first_name" : "Stevan", "last_name" : "Little" },
-                "version" : "4162F712-1DD2-11B2-B17E-C09EFE1DC403",
+                "version" : "4003b4f63156c825263eab5221d707f3bd69f774c63555c949897fc896d42314",
                 "links"   : []
             }
         ]

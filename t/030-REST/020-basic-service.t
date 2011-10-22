@@ -321,7 +321,7 @@ test_psgi( app => $app, client => sub {
     {
         my $req = PUT("http://localhost/1" => (
             'Content-Type' => 'application/json',
-            'Content'      => '{"id":"1","version":"fe982ce14ce2b2a1c09762decdeb1522a1e0a2ca390673446c930ca5fd11d2","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
+            'Content'      => '{"id":"1","version":"9d4a75302bb634edf050d6b838b050b978bea1460d5879618e8e3ae8c291247a","body":{"first_name":"Stevan","last_name":"Little","age":38}}'
         ));
         my $res = $cb->($req);
         is($res->code, 409, '... got the right status for this exception');
