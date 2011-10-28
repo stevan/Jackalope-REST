@@ -32,6 +32,41 @@
       of sorts, it could take a JSON state machine
       as input.
 
+= IDEAS =
+
+lose coupling means
+    - I can deploy my clients nad servers independently an it
+      doesnt tank
+
+document centric model
+    - means old clients can take what they want
+    - and ignore the rest
+    - while new clients can take it all
+    - this requires schemas to be more lenient, hmmm
+
+in client code:
+    - add a responds-to method, which allows you to
+      ask if something "can do" something (can I create, etc etc)
+    - leverage caching at the client level
+    - critical that clients always look shit up
+        - honor redirects
+
+app recovery
+    - human web has "account history", etc
+    - REST web should have something simialar
+    - idempotent operations should be fine
+        - others are not
+        - so submit something by UUID
+            - if it fails, but we are not sure why
+                - check to see with GET if it happened
+                - or PUT again and be told "no, already done"
+
+- add "body" to link to tell it what to send
+    - this means things dont have to look at OPTIONS
+
+- literate services
+    - the description in Jackalope schemas :)
+
 == LINKS ==
 
 http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
