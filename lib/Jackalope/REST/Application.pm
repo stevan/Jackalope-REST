@@ -30,7 +30,7 @@ sub build_service_map {
     return +{
         map {
             my $uri_base = $_->uri_base
-                || confess "Services in a Service::Directory must have a uri-base";
+                || confess "Service in a Service::Directory must have a uri-base : failed with schema(" . $_->schema->{'id'} . ")";
             ($uri_base => $_)
         } $self->all_services
     };
