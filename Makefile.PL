@@ -24,6 +24,6 @@ build_requires 'Test::Fatal'           => 0;
 build_requires 'Resource::Pack'        => 0;
 build_requires 'HTTP::Request::Common' => 0;
 
-tests('t/*.t');
+tests('t/*.t t/*/*.t');
 
 WriteAll();
