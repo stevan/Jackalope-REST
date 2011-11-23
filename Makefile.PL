@@ -8,6 +8,7 @@ license 'perl';
 
 requires 'Jackalope'                  => 0;
 requires 'MooseX::NonMoose'           => 0;
+requires 'MooseX::StrictConstructor'  => 0;
 requires 'HTTP::Throwable'            => 0.011;
 requires 'Plack'                      => 0;
 requires 'CGI::Expand'                => 0;
@@ -20,6 +21,7 @@ requires 'Scalar::Util'               => 0;
 build_requires 'Test::More'            => 0;
 build_requires 'Test::Moose'           => 0;
 build_requires 'Test::Fatal'           => 0;
+build_requires 'Resource::Pack'        => 0;
 build_requires 'HTTP::Request::Common' => 0;
 
 tests('t/*.t');
