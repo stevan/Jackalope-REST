@@ -52,6 +52,11 @@ sub get_all_linkrels { (shift)->compiled_schema->links }
     };
 }
 
+sub generate_schema_link_for_resource {
+    my ($self, $resource) = @_;
+    $self->router->uri_for( 'describedby' )->{'href'};
+}
+
 sub generate_read_link_for_resource {
     my ($self, $resource) = @_;
     $self->router->uri_for( 'read' => { id => $resource->id } )->{'href'};
