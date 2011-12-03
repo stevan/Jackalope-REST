@@ -404,5 +404,55 @@ BEGIN {
 
 }
 
+{
+    my $router = Jackalope::REST::Router->new(
+        uri_base => 'test/foo',
+        linkrels => {
+            search => {
+                rel    => 'search',
+                href   => '/search',
+                method => 'GET',
+            },
+            geo_search => {
+                rel    => 'geo_search',
+                href   => '/search/geo',
+                method => 'GET',
+            }
+        }
+    );
+    isa_ok($router, 'Jackalope::REST::Router');
+
+    {
+        my $match = $router->match( 'test/foo/search', 'GET' );
+        is_deeply($match->{link}, {
+            rel    => 'search',
+            href   => '/search',
+            method => 'GET',
+        }, '... got the link we expected');
+    }
+
+    {
+        my $match = $router->match( 'test/foo/search/geo', 'GET' );
+        is_deeply($match->{link}, {
+            rel    => 'geo_search',
+            href   => '/search/geo',
+            method => 'GET',
+        }, '... got the link we expected');
+    }
+
+    is_deeply(
+        $router->uri_for( 'search' ),
+        { rel => 'search', href => 'test/foo/search', method => 'GET' },
+        '... got the hyperlink we expected'
+    );
+
+    is_deeply(
+        $router->uri_for( 'geo_search' ),
+        { rel => 'geo_search', href => 'test/foo/search/geo', method => 'GET' },
+        '... got the hyperlink we expected'
+    );
+
+}
+
 
 done_testing;
