@@ -6,7 +6,7 @@ name 'Jackalope-REST';
 all_from 'lib/Jackalope/REST.pm';
 license 'perl';
 
-requires 'Jackalope'                  => 0;
+# requires 'Jackalope'                  => 0;
 requires 'MooseX::NonMoose'           => 0;
 requires 'MooseX::StrictConstructor'  => 0;
 requires 'HTTP::Throwable'            => 0.011;
