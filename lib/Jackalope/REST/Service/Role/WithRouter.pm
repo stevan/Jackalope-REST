@@ -65,8 +65,20 @@ sub to_app {
             $result = $target->to_app->( $env );
         } catch {
             if (blessed $_) {
-                # assume this is one of ours
-                $error = $_;
+                if ( $_->can('does') && $_->does('HTTP::Throwable') ) {
+                    # assume this is one of ours
+                    # or at least that it will do
+                    # ->as_psgi so it really maters
+                    # none to me.
+                    $error = $_;
+                }
+                else {
+                    # otherwise wrap it up in one of ours
+                    # and force stringification on it
+                    $error = Jackalope::REST::Error::InternalServerError->new(
+                        message => "$_"
+                    );
+                }
             }
             else {
                 # otherwise wrap it up in one of ours
