@@ -104,7 +104,7 @@ sub check_data_schema {
     # 'method' specified
     if ( exists $self->link->{'data_schema'} ) {
         # should this default to GET?
-        if ( $self->link->{'method'} eq 'GET' ) {
+        if ( $self->link->{'method'} eq 'GET' || $self->link->{'method'} eq 'HEAD' ) {
             $params = expand_hash( $r->query_parameters->as_hashref_mixed );
         }
         elsif ( $self->link->{'method'} eq 'POST' || $self->link->{'method'} eq 'PUT' ) {
