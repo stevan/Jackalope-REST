@@ -62,6 +62,11 @@ sub generate_read_link_for_resource {
     $self->router->uri_for( 'read' => { id => $resource->id } )->{'href'};
 }
 
+sub generate_read_link_for_resource_id {
+    my ($self, $resource_id) = @_;
+    $self->router->uri_for( 'read' => { id => $resource_id } )->{'href'};
+}
+
 sub generate_links_for_resource {
     my ($self, $resource, $links) = @_;
     $resource->add_links(
